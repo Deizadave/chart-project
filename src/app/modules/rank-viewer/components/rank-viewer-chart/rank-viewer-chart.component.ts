@@ -4,6 +4,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as moment from 'moment';
 import { Product } from '../../../../models/product.interface';
+import { RankRange } from 'src/app/models/rank.interface';
 
 @Component({
   selector: 'dh-rank-viewer-chart',
@@ -13,7 +14,10 @@ import { Product } from '../../../../models/product.interface';
 export class RankViewerChartComponent implements OnInit, OnChanges {
   @Input() selectedDataset: ProductRank[] | null = [];
   @Input() chartOptions: ChartOptions = {};
-
+  @Input() rankRange: RankRange | null = null;
+  
+  
+  
   chartData: ChartDataSets[] = [];
   chartLabels: Label[] = [];
 
@@ -44,8 +48,8 @@ export class RankViewerChartComponent implements OnInit, OnChanges {
 
   private getData(): ChartDataSets[] {
     const productASINs = Array.from(new Set(this.selectedDataset?.map((r: ProductRank) => r.ASIN)) ?? []);
-    const data: ChartDataSets[] = [];
-
+    let data: ChartDataSets[] = [];
+    
     for (const ASIN of productASINs) {
       const product: Product | null = this.getProduct(ASIN);
 
@@ -55,6 +59,8 @@ export class RankViewerChartComponent implements OnInit, OnChanges {
 
       data.push({ data: this.getProductData(product), label: product.name, fill: false });
     }
+    
+    data = this.rankRange ? data.slice(this.rankRange.min, this.rankRange.max) : data;
 
     return data;
   }

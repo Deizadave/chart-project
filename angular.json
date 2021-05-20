@@ -55,9 +55,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/daterangepicker/daterangepicker.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/moment/moment.js",
+              "node_modules/daterangepicker/daterangepicker.js"
+            ],
             "allowedCommonJsDependencies": [
               "chart.js"
             ]

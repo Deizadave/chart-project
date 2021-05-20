@@ -1,11 +1,35 @@
 <div class="filters">
-    <div class="dropdown">
-        <select class="dropdown-select" #selectList (change)="onDatasetClick(selectList.value)">
-            <option *ngFor="let id of datasetIds"
-                    [value]="id"
-                    [selected]="selectedId === id">
-                {{ id.toUpperCase() }}
-            </option>
-        </select>
+    <!-- <h1 class="filters__header">Filters</h1> -->
+    <div class="filters__body">
+        <div class="filters__item">
+            <label class="filters__item-label">Product</label>
+            <div class="dropdown">
+                <select class="dropdown-select" #selectList (change)="onDatasetClick(selectList.value)">
+                    <option *ngFor="let id of datasetIds"
+                            [value]="id"
+                            [selected]="selectedId === id">
+                        {{ id.toUpperCase() }}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filters__item">
+            <label class="filters__item-label">Date range</label>
+            <input type="text" class="filters__input" [value]="dateRange?.startDate + ' - ' + dateRange?.endDate" id="dateInput">
+        </div>
+        
+        <div class="filters__item">
+            <label class="filters__item-label">Rank range</label>
+            <div class="filters__input-row">
+                <input type="number" class="filters__input"
+                    [value]="rankRange?.min" #minRank
+                    (change)="onRankChange('min', toNumber(minRank.value))">
+                &nbsp;<b>-</b>&nbsp;
+                <input type="number" class="filters__input"
+                    [value]="rankRange?.max" #maxRank
+                    (change)="onRankChange('max', toNumber(maxRank.value))">
+            </div>
+        </div>
     </div>
 </div>

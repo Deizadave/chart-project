@@ -7,25 +7,39 @@ import { BedroomFurnitureBSROverTime } from '../../assets/dataset/BSR/bedroom-fu
 import { MattressesAndBoxSpringsBSROverTime } from '../../assets/dataset/BSR/mattresses-and-box-springs.dataset';
 import { FurnitureBSROverTime } from '../../assets/dataset/BSR/furniture.dataset';
 import * as moment from 'moment';
-
-function getOneWeekOfData(dataset: ProductRank[]): ProductRank[] {
-  const limitDate = moment('11/30/2019', 'MM/DD/YYYY').utc(true);
-
-  return dataset.filter((p) => moment(p.date, 'MM/DD/YYYY').isAfter(limitDate));
-}
+import { DateRange } from '../models/date';
+import { RankBoundry, RankRange } from '../models/rank.interface';
 
 export interface AppStateModel {
   dataset: { [key in DatasetId]: ProductRank[] };
   selectedDatasetId: DatasetId;
+  rankRange: RankRange;
+  dateRange: DateRange;
+}
+
+
+function getDataWithinDuration(dataset: ProductRank[], range: DateRange): ProductRank[] {
+  const startDate = moment(range.startDate, 'MM/DD/YYYY').utc(true);
+  const endDate = moment(range.endDate, 'MM/DD/YYYY').utc(true);
+
+  return dataset.filter((p) => moment(p.date, 'MM/DD/YYYY').isBetween(startDate, endDate));
 }
 
 const defaults: AppStateModel = {
   dataset: {
-    [DatasetId.BSR_FURNITURE]: getOneWeekOfData(FurnitureBSROverTime),
-    [DatasetId.BSR_BEDROOM_FURNITURE]: getOneWeekOfData(BedroomFurnitureBSROverTime),
-    [DatasetId.BSR_MATTRESSES_AND_BOX_SPRINGS]: getOneWeekOfData(MattressesAndBoxSpringsBSROverTime),
+    [DatasetId.BSR_FURNITURE]: FurnitureBSROverTime,
+    [DatasetId.BSR_BEDROOM_FURNITURE]: BedroomFurnitureBSROverTime,
+    [DatasetId.BSR_MATTRESSES_AND_BOX_SPRINGS]: MattressesAndBoxSpringsBSROverTime,
   },
-  selectedDatasetId: DatasetId.BSR_FURNITURE
+  selectedDatasetId: DatasetId.BSR_FURNITURE,
+  rankRange: {
+    min: RankBoundry.MIN,
+    max: RankBoundry.MAX
+  },
+  dateRange: {
+    startDate: '11/30/2019',
+    endDate: '12/06/2019'
+  }
 }
 
 @State<AppStateModel>({
@@ -39,7 +53,8 @@ export class AppState {
 
   @Selector()
   public static selectedDataset(state: AppStateModel): ProductRank[] {
-    return state.dataset[state.selectedDatasetId];
+    const dataset = getDataWithinDuration(state.dataset[state.selectedDatasetId], state.dateRange)
+    return dataset;
   }
 
   @Selector()
@@ -47,8 +62,28 @@ export class AppState {
     return state.selectedDatasetId;
   }
 
+  @Selector()
+  public static rankRange(state: AppStateModel): RankRange {
+    return state.rankRange;
+  }
+
+  @Selector()
+  public static dateRange(state: AppStateModel): DateRange {
+    return state.dateRange;
+  }
+
   @Action(AppActions.SelectDataset)
   selectDataset({ patchState }: StateContext<AppStateModel>, { datasetId }: AppActions.SelectDataset) {
     patchState({ selectedDatasetId: datasetId });
+  }
+
+  @Action(AppActions.SetDateRange)
+  setDateRange({ patchState }: StateContext<AppStateModel>, { range }: AppActions.SetDateRange) {
+    patchState({ dateRange: range });
+  }
+
+  @Action(AppActions.SetRankRange)
+  setRankRange({ patchState }: StateContext<AppStateModel>, { range }: AppActions.SetRankRange) {
+    patchState({ rankRange: range });
   }
 }

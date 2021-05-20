@@ -1,4 +1,4 @@
-import { ChartOptions } from 'chart.js';
+import { ChartOptions, Chart } from 'chart.js';
 
 export const CHART_OPTIONS: ChartOptions = {
     defaultColor: 'black',
