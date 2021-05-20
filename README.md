@@ -1,27 +1,9 @@
 # Datahawk Best Selling Product rank viewer module
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.0.
+This project is being submitted as a solution to the DataHawk Senior Frontend home project.
 
-## Development server
+## UI/UX improvement suggestions
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-**Not implemented**
-
-## Running end-to-end tests
-
-**Not implemented**
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* Users should be able to select the range of ranks to display on the chart. This has been implemented.
+* When a dataset element is hovered, all other other elements can be made to have a lesser opacity, thus increasing focus on the hovered element.
+* Users could be given the option of selecting either a light or dark theme because some users may prefer one over the other on busy screens.
