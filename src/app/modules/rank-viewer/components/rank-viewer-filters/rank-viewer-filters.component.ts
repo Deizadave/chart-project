@@ -1,8 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DateRange, DateBoundry } from '../../../../models/date';
 import { DatasetId } from '../../../../models/dataset-id.enum';
 import { RankBoundry, RankRange } from 'src/app/models/rank.interface';
-declare var $: any;
+import * as DateRangePicker from 'daterangepicker';
 
 @Component({
   selector: 'dh-rank-viewer-filters',
@@ -20,6 +20,8 @@ export class RankViewerFiltersComponent implements OnInit, AfterViewInit {
   @Output() dateChange: EventEmitter<DateRange> = new EventEmitter<DateRange>();
   @Output() rankChange: EventEmitter<RankRange> = new EventEmitter<RankRange>();
 
+  // @ts-ignore
+  @ViewChild('dateInput') dateInput: ElementRef;
 
   constructor() { }
 
@@ -27,8 +29,7 @@ export class RankViewerFiltersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // console.log(this.dateInput.value);
-    $("#dateInput").daterangepicker({
+    new DateRangePicker(this.dateInput.nativeElement, {
       opens: 'center',
       minDate: DateBoundry.MIN,
       maxDate: DateBoundry.MAX

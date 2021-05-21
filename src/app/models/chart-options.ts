@@ -1,4 +1,4 @@
-import { ChartOptions, Chart } from 'chart.js';
+import { ChartOptions } from 'chart.js';
 
 export const CHART_OPTIONS: ChartOptions = {
     defaultColor: 'black',
@@ -28,5 +28,8 @@ export const CHART_OPTIONS: ChartOptions = {
                 },
             }
         ]
+    },
+    hover: {
+        mode: 'dataset'
     }
 };

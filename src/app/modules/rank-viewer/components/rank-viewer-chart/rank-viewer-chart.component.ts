@@ -57,7 +57,15 @@ export class RankViewerChartComponent implements OnInit, OnChanges {
         continue;
       }
 
-      data.push({ data: this.getProductData(product), label: product.name, fill: false });
+      data.push({
+        data: this.getProductData(product),
+        label: product.name,
+        fill: false,
+        hoverBorderWidth: 6,
+        hoverBorderColor: "#FFFFFF",
+        pointHoverRadius: 8,
+        pointHoverBorderWidth: 4
+      });
     }
     
     data = this.rankRange ? data.slice(this.rankRange.min, this.rankRange.max) : data;
