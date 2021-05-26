@@ -4,6 +4,6 @@ export interface DateRange {
 }
 
 export enum DateBoundry {
-    MIN = '11/07/2019',
+    MIN = '11/06/2019',
     MAX = '12/06/2019',
 }

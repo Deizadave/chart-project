@@ -1,4 +1,8 @@
 <div class="chart">
+    <div class="chart-message" *ngIf="chartMessage">
+        {{chartMessage}}
+    </div>
+    
     <canvas baseChart
             [datasets]="chartData"
             [labels]="chartLabels"

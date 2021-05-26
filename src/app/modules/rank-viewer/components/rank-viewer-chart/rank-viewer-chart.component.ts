@@ -20,6 +20,7 @@ export class RankViewerChartComponent implements OnInit, OnChanges {
   
   chartData: ChartDataSets[] = [];
   chartLabels: Label[] = [];
+  chartMessage: string | undefined;
 
   constructor() { }
 
@@ -69,7 +70,15 @@ export class RankViewerChartComponent implements OnInit, OnChanges {
     }
     
     data = this.rankRange ? data.slice(this.rankRange.min, this.rankRange.max) : data;
-
+    if (data.length === 0) {
+      this.chartMessage = `
+        Sorry, there is currently no data for your preferred options.
+        Please change your options or check back later.
+      `;
+    } else {
+      this.chartMessage = '';
+    }
+    
     return data;
   }
 
