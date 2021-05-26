@@ -19,7 +19,7 @@ export interface AppStateModel {
 
 
 function getDataWithinDuration(dataset: ProductRank[], range: DateRange): ProductRank[] {
-  const startDate = moment(range.startDate, 'MM/DD/YYYY').utc(true);
+  const startDate = moment(range.startDate, 'MM/DD/YYYY').subtract(1, 'days').utc(true);
   const endDate = moment(range.endDate, 'MM/DD/YYYY').utc(true);
 
   return dataset.filter((p) => moment(p.date, 'MM/DD/YYYY').isBetween(startDate, endDate));
